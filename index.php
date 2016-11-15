@@ -1,3 +1,3 @@
 <?php
-echo 'hello webappig !';
+echo phpinfo();
 ?>
