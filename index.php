@@ -22,7 +22,7 @@ include 'assets/inc/header.php';
 					<div class="results">
 						<ul class="list">
 							<li class="list-item">
-								<a href="" class="result-link">
+								<a href="" class="result-link" target="_blank">
 									<span class="type">
 										#
 									</span>
@@ -37,7 +37,7 @@ include 'assets/inc/header.php';
 								</a>
 							</li>
 							<li class="list-item">
-								<a href="" class="result-link">
+								<a href="" class="result-link" target="_blank">
 									<span class="type">
 										@
 									</span>
@@ -52,7 +52,7 @@ include 'assets/inc/header.php';
 								</a>
 							</li>
 							<li class="list-item">
-								<a href="" class="result-link">
+								<a href="" class="result-link" target="_blank">
 									<span class="type">
 										#
 									</span>
@@ -75,7 +75,7 @@ include 'assets/inc/header.php';
 </header>
 
 <section id="main">
-	<div id="results">
+	<div id="results" class="searching">
 		<ul class="list">
 			<li class="list-item">
 				<div class="top">

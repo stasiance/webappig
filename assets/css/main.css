@@ -205,8 +205,12 @@ ul li{
 	box-sizing:border-box;
 	padding:100px 200px 50px;
 }
+#results.searching {
+	background:url('../img/big_ajax_loader.gif') no-repeat scroll center center transparent;
+}
 #results .list {
 	word-spacing:-0.26em;
+	background-color:#FAFAFA;
 }
 #results .list-item {
 	display:inline-block;
