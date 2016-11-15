@@ -9,7 +9,7 @@ include 'assets/inc/header.php';
 		</a>
 
 		<div id="search">
-			<form action="" id="search-form" class="searching">
+			<form action="" id="search-form" class="">
 				<span class="input">
 					<input id="search-input" type="text" class="input-text" placeholder="Search">
 				</span>
