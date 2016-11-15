@@ -14,7 +14,7 @@ include 'assets/inc/header.php';
 					<input id="search-input" type="text" class="input-text" placeholder="Search">
 				</span>
 				
-				<div class="results-preview show">
+				<div class="results-preview">
 					<span class="triangles">
 						<span class="triangle-1"></span>
 						<span class="triangle-2"></span>
