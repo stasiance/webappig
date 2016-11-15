@@ -3,26 +3,49 @@ $(document).ready(function () {
     var formCnt = $("#search-form");
     var resultCnt = $(".results-preview");
 
-    $(sfield).keyup(function () {
-        $.ajax({
-            url: "/assets/inc/ajax.php",
-
-            //url: "https://www.instagram.com/web/search/topsearch/?query=" + $(sfield).val(),
-            //url: "https://api.instagram.com/v1/tags/search?q=" + $(sfield).val() + "&access_token=1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9",
-            //url: "https://api.instagram.com/v1/tags/" + $(sfield).val() + "/media/recent?access_token=1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9",
-            //url: "https://api.instagram.com/v1/tags/" + $(sfield).val() + "?access_token=1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9",
-
-
-            type: 'POST',
-            data: 'm=search&q=' + $(sfield).val(),
-            beforeSend: function () {
-                $(formCnt).addClass('searching');
-            },
-            success: function (r) {
-                $(formCnt).removeClass('searching');
-                $(resultCnt).addClass('show');
-                console.log( r );
-            }
-        });
+	resultCnt.bind('focusout', function() {
+		$(this).removeClass('show');
+	});
+	
+	var timer = null;
+    var timerFc = function() {
+		$.ajax({
+			url: "assets/inc/ajax.php",
+			type: 'POST',
+			data: 'm=search&q=' + sfield.val(),
+			beforeSend: function () {
+				formCnt.addClass('searching');
+			},
+			success: function (r) {
+				formCnt.removeClass('searching');
+				resultCnt.addClass('show').focus();
+				resultCnt.trigger('focusin');
+				var rj = jQuery.parseJSON(r);
+				var output = "";
+				console.log(rj);
+				for (var x in rj.users) {
+					output += '<li class="list-item">' +
+								'<a href="" class="result-link" target="_blank">' +
+									'<span class="type">' +
+										
+									'</span>' +
+									'<span class="info">' +
+										'<span class="nickname">' +
+											rj.users[x].user.username + 
+										'</span>' +
+										'<span class="figure">' +
+											rj.users[x].user.byline + 
+										'</span>' +
+									'</span>' +
+								'</a>' + 
+							'</li>';					 
+				}
+				resultCnt.find('.results .list').html(output);
+			}
+		});
+	};
+	sfield.keyup(function () {
+		clearTimeout(timer);
+		timer = setTimeout(function() { timerFc(); }, 250);
     })
 });
