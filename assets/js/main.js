@@ -58,7 +58,7 @@ $(document).ready(function () {
 					};
 				}
 				for (var x in datatable) {
-					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '" data-name="' + datatable[x].user + '">' +
+					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '" data-name="' + datatable[x].user + '" data-category="' + datatable[x].category + '">' +
 						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
 						'<span class="type">' +
 						datatable[x].type +
@@ -104,6 +104,7 @@ $(document).ready(function () {
 						data: 'm=' + searchType +
 							'&sk=' + encodeURIComponent($(sfield).val()) +
 							'&ck=' + $(this).attr('data-name') +
+							'&ck_t=' + $(this).attr('data-category') +
 							'&q=' + $(this).attr('data-id'),
 						beforeSend: function () {},
 						success: function (r) {

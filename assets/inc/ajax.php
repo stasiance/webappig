@@ -7,7 +7,7 @@ $access_token = '1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9';
 // Insert into Database for Search Log
 $mode = array('searchTag', 'searchUser', 'searchLocation');
 if(in_array($_REQUEST['m'], $mode)) {
-    $sql = 'INSERT INTO search (search_keyword, click_keyword) VALUES ("' . $_REQUEST['sk'] . '", "' . $_REQUEST['ck'] . '")';
+    $sql = 'INSERT INTO search (search_keyword, click_keyword, click_keyword_type) VALUES ("' . $_REQUEST['sk'] . '", "' . $_REQUEST['ck'] . '", "' . $_REQUEST['ck_t'] . '")';
     go_mysql($sql);
 }
 
