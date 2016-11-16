@@ -11,7 +11,7 @@ $(document).ready(function () {
 	var numberWithCommas = function(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		;}
-	var timerFc = function() {
+	var timerFc = function(encodeTxt) {
 		$.ajax({
 			url: "assets/inc/ajax.php",
 			type: 'POST',
@@ -23,43 +23,49 @@ $(document).ready(function () {
 				var rj = jQuery.parseJSON(r);
 				var output = "";
 				var datatable = [];
+				
 				for (var x in rj.hashtags) {
 					datatable[rj.hashtags[x].position] = {
+						'category' : 'hashtag',
 						'type' : '#',
 						'user' : rj.hashtags[x].hashtag.name,
 						'byline' : numberWithCommas(rj.hashtags[x].hashtag.media_count) + ' posts',
-						'link' : 'http://www.instagram.com/' + rj.hashtags[x].hashtag.name + '/'
+						'link' : 'http://www.instagram.com/' + rj.hashtags[x].hashtag.name + '/',
+						'id' : rj.hashtags[x].hashtag.name
 					};
 				}
 				for (var x in rj.places) {
 					datatable[rj.places[x].position] = {
+						'category' : 'location',
 						'type' : '@',
 						'user' : rj.places[x].place.title,
 						'byline' : rj.places[x].place.subtitle,
-						'link' : 'http://www.instagram.com/explore/locations/' + rj.places[x].place.location.pk + '/' + rj.places[x].place.slug + '/'
+						'link' : 'http://www.instagram.com/explore/locations/' + rj.places[x].place.location.pk + '/' + rj.places[x].place.slug + '/',
+						'id' : rj.places[x].place.location.pk
 					};
 				}
 				for (var x in rj.users) {
 					datatable[rj.users[x].position] = {
+						'category' : 'user',
 						'type' : '<img src="' + rj.users[x].user.profile_pic_url + '" alt="">',
 						'user' : rj.users[x].user.username,
 						'byline' : rj.users[x].user.full_name,
-						'link' : 'http://www.instagram.com/' + rj.users[x].user.username + '/'
+						'link' : 'http://www.instagram.com/' + rj.users[x].user.username + '/',
+						'id' : rj.users[x].user.pk
 					};
 				}
-
 				for (var x in rj.users) {
-					output += '<li class="list-item">' +
+					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '">' +
 						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
 						'<span class="type">' +
-						datatable[x].type +
+							datatable[x].type +
 						'</span>' +
 						'<span class="info">' +
 						'<span class="nickname">' +
-						datatable[x].user +
+							datatable[x].user +
 						'</span>' +
 						'<span class="figure">' +
-						datatable[x].byline +
+							datatable[x].byline +
 						'</span>' +
 						'</span>' +
 						'</a>' +
@@ -68,31 +74,44 @@ $(document).ready(function () {
 				resultCnt.find('.results .list').html(output);
 				formCnt.removeClass('searching');
 				resultCnt.addClass('show').focus();
-
-
-
-				$('.search-result').click(function () {
+				
+				resultCnt.find('.list-item').bind('click', function (e) {
+					e.preventDefault();
+					
+					var searchType = 'searchTag';
+					switch($(this).attr('data-type')) {
+						case 'hashtag' :
+							searchType = 'searchTag';
+							break;
+							
+						case 'location' :
+							searchType = 'searchLocation';
+							break;
+							
+						case 'user' :
+							searchType = 'searchUser';
+							break;
+					}
+					
 					$.ajax({
 						url: "assets/inc/ajax.php",
 						type: 'POST',
-						data: 'm=searchTag&q=' + sfield.val(),
-						data: 'https://api.instagram.com/v1/tags/' + sfield.val() + '/media/recent?access_token=1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9',
-						beforeSend: function () {
-						},
+						data: 'm=' + searchType + '&q=' + $(this).attr('data-id'),
+						beforeSend: function () {},
 						success: function (r) {
-							console.log( r );
+							var rj = jQuery.parseJSON(r);
+							console.log(rj);
 						}
 					});
+					
+					return false;
 				});
-
-
-
-
 			}
 		});
 	};
 	sfield.keyup(function () {
 		clearTimeout(timer);
-		timer = setTimeout(function() { timerFc(); }, 500);
-	})
+		timer = setTimeout(function() { timerFc(sfield.val()); }, 500);
+	});
+	
 });

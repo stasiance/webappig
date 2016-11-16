@@ -16,4 +16,16 @@ switch ($_POST['m']) {
         $result = file_get_contents($url);
         echo $result;
         break;
+	
+	case 'searchUser':
+		$url = 'https://api.instagram.com/v1/users/' . $_REQUEST['q'] . '/media/recent/?access_token=' . $access_token;
+		$result = file_get_contents($url);
+		echo $result;
+		break;
+	
+	case 'searchLocation':
+		$url = 'https://api.instagram.com/v1/locations/' . $_REQUEST['q'] . '/media/recent/?access_token=' . $access_token;
+		$result = file_get_contents($url);
+		echo $result;
+		break;
 }
