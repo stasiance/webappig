@@ -14,10 +14,11 @@ $(document).ready(function () {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		;}
 	var timerFc = function(encodeTxt) {
+		var encodeTxt = encodeURIComponent($(sfield).val());
 		$.ajax({
 			url: "assets/inc/ajax.php",
 			type: 'GET',
-			data: 'm=search&q=' + encodeURIComponent(encodeTxt),
+			data: 'm=search&q=' + encodeTxt,
 			beforeSend: function () {
 				formCnt.addClass('searching');
 			},
@@ -57,7 +58,7 @@ $(document).ready(function () {
 					};
 				}
 				for (var x in rj.users) {
-					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '">' +
+					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '" data-name="' + datatable[x].user + '">' +
 						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
 						'<span class="type">' +
 						datatable[x].type +
@@ -101,10 +102,8 @@ $(document).ready(function () {
 						url: "assets/inc/ajax.php",
 						type: 'GET',
 						data: 'm=' + searchType +
-							'&sk=' + $(this).attr('data-id') +
-							'&ck=' + $(this).attr('data-id') +
-							'&q=' + $(this).attr('data-id') +
-							'&q=' + $(this).attr('data-id') +
+							'&sk=' + $(sfield).val() +
+							'&ck=' + $(this).attr('data-name') +
 							'&q=' + $(this).attr('data-id'),
 						beforeSend: function () {},
 						success: function (r) {

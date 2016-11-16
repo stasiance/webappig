@@ -1,11 +1,11 @@
 .clearfix:after {
-     visibility: hidden;
-     display: block;
-     font-size: 0;
-     content: " ";
-     clear: both;
-     height: 0;
-     }
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
 .clearfix { display: inline-block; }
 /* start commented backslash hack \*/
 * html .clearfix { height: 1%; }
@@ -78,7 +78,7 @@ img {
 	line-height:1em;
 	background-color:#FAFAFA;
 	text-align:center;
-	
+
 	border-radius:3px;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
@@ -111,8 +111,8 @@ img {
 	top:-11px;
 	left:50%;
 	margin-left:-10px;
-	width:0; 
-	height:0; 
+	width:0;
+	height:0;
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
 	border-bottom: 12px solid #FFF;
@@ -124,8 +124,8 @@ img {
 	top:-12px;
 	left:50%;
 	margin-left:-10px;
-	width:0; 
-	height:0; 
+	width:0;
+	height:0;
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
 	border-bottom: 12px solid #CCC;
@@ -138,7 +138,7 @@ img {
 	margin-top:-1px;
 	max-height:400px;
 	overflow:auto;
-	
+
 	-webkit-box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.75);
 	-moz-box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.75);
 	box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.75);
@@ -165,7 +165,7 @@ img {
 	text-align:center;
 	font-size:1.625em;
 	color:#DFDFDF;
-	
+
 	*display:inline;
 	*zoom:1;
 }
@@ -248,13 +248,13 @@ img {
 	overflow:hidden;
 	word-spacing:0;
 	border:1px solid #EEEEEE;
-	
+
 	box-sizing:border-box;
-	
+
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
-	
+
 	*display:inline;
 	*zoom:1;
 }
@@ -292,17 +292,43 @@ img {
 #results .top {
 	display:block;
 	width:80%;
+	text-align:center;
 	margin:0 auto 40px;
 }
-#results .image {
+#results .top .image {
 	display:inline-block;
+	vertical-align:middle;
+	width:30%;
+	text-align:center;
+	*display:inline;
+	*zoom:1;
+}
+#results .top .image a {
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+}
+#results .top .image img {
+	display:inline-block;
+	border-radius:100px;
+	-moz-border-radius:100px;
+	-webkit-border-radius:100px;
+	*display:inline;
+	*zoom:1;
+}
+#results .top .info {
+	display:inline-block;
+	margin-left:3%;
+	width:60%;
+	text-align:left;
 	vertical-align:middle;
 	*display:inline;
 	*zoom:1;
 }
-#results .info {
+#results .top .info .name a {
 	display:inline-block;
-	vertical-align:middle;
+	font-size:1.875em;
+	color:#000;
 	*display:inline;
 	*zoom:1;
 }
