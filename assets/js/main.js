@@ -3,16 +3,32 @@ $(document).ready(function () {
 	var formCnt = $("#search-form");
 	var resultCnt = $(".results-preview");
 
-	 resultCnt.bind('focusout', function() {
+	resultCnt.bind('focusout', function() {
 	 	setTimeout(function() {
 	 		resultCnt.removeClass('show');
 	 	}, 600);
-	 });
+	});
+	
+	$('#search-form').bind('submit', function(e) {
+		e.preventDefault();
+		return false;
+	});
 
 	var timer = null;
 	var numberWithCommas = function(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		;}
+	var sortArrayData = function(property) {
+		var sortOrder = 1;
+		if(property[0] === "-") {
+			sortOrder = -1;
+			property = property.substr(1);
+		}
+		return function (a,b) {
+			var result = (a[property] < b[property]) ? 1 : (a[property] > b[property]) ? -1 : 0;
+			return result * sortOrder;
+		}
+	};
 	var timerFc = function(encodeTxt) {
 		var encodeTxt = encodeURIComponent($(sfield).val());
 		$.ajax({
@@ -26,37 +42,58 @@ $(document).ready(function () {
 				var rj = jQuery.parseJSON(r);
 				var output = "";
 				var datatable = [];
-
+				var tableindex = 0;
+				var hashtagsData = [];
+				var placesData = [];
+				var usersData = [];
+			
 				for (var x in rj.hashtags) {
-					datatable[rj.hashtags[x].position] = {
+					hashtagsData[tableindex] = {
 						'category' : 'hashtag',
 						'type' : '#',
 						'user' : rj.hashtags[x].hashtag.name,
 						'byline' : numberWithCommas(rj.hashtags[x].hashtag.media_count) + ' posts',
 						'link' : 'http://www.instagram.com/' + rj.hashtags[x].hashtag.name + '/',
-						'id' : rj.hashtags[x].hashtag.name
+						'id' : rj.hashtags[x].hashtag.name,
+						'sortkey' : rj.hashtags[x].hashtag.media_count
 					};
+					tableindex++;
 				}
+				tableindex = 0;
 				for (var x in rj.places) {
-					datatable[rj.places[x].position] = {
+					placesData[tableindex] = {
 						'category' : 'location',
 						'type' : '@',
 						'user' : rj.places[x].place.title,
 						'byline' : rj.places[x].place.subtitle,
 						'link' : 'http://www.instagram.com/explore/locations/' + rj.places[x].place.location.pk + '/' + rj.places[x].place.slug + '/',
-						'id' : rj.places[x].place.location.pk
+						'id' : rj.places[x].place.location.pk,
+						'sortkey' : rj.places[x].place.location.pk
 					};
+					tableindex++;
 				}
+				tableindex = 0;
 				for (var x in rj.users) {
-					datatable[rj.users[x].position] = {
+					usersData[tableindex] = {
 						'category' : 'user',
 						'type' : '<img src="' + rj.users[x].user.profile_pic_url + '" alt="">',
 						'user' : rj.users[x].user.username,
 						'byline' : rj.users[x].user.full_name,
 						'link' : 'http://www.instagram.com/' + rj.users[x].user.username + '/',
-						'id' : rj.users[x].user.pk
+						'id' : rj.users[x].user.pk,
+						'sortkey' : rj.users[x].user.follower_count
 					};
+					tableindex++;
 				}
+				
+				if (sortArrayData.length > 0) hashtagsData.sort(sortArrayData('sortkey'));
+				if (placesData.length > 0) placesData.sort(sortArrayData('sortkey'));
+				if (usersData.length > 0) usersData.sort(sortArrayData('sortkey'));
+				
+				Array.prototype.push.apply(datatable, hashtagsData);
+				Array.prototype.push.apply(datatable, placesData);
+				Array.prototype.push.apply(datatable, usersData);
+				
 				for (var x in datatable) {
 					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '" data-name="' + datatable[x].user + '">' +
 						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +

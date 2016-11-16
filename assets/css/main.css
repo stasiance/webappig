@@ -71,6 +71,7 @@ img {
 #search-input {
 	display:block;
 	width:250px;
+	margin:0;
 	padding:5px 10px 4px;
 	font-family: 'Questrial', sans-serif;
 	font-size:1em;
@@ -227,11 +228,13 @@ img {
 	min-height:600px;
 	background-color:#FAFAFA;
 	box-sizing:border-box;
-	padding:100px 200px 50px;
+	padding:100px 0px 50px;
 }
 #results {
 	display:block;
 	min-height:400px;
+	width:75%;
+	margin:0 auto;
 }
 #results.searching {
 	background:url('../img/big_ajax_loader.gif') no-repeat scroll center center transparent;
@@ -247,13 +250,10 @@ img {
 	vertical-align:top;
 	overflow:hidden;
 	word-spacing:0;
-	border:1px solid #EEEEEE;
-
+	border:none;
 	box-sizing:border-box;
+	text-align:center;
 
-	border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
 
 	*display:inline;
 	*zoom:1;
@@ -266,6 +266,7 @@ img {
 #results .list-item .image {
 	display:block;
 	overflow:hidden;
+	text-align:center;
 }
 #results .list-item .image a {
 	display:block;
@@ -273,6 +274,10 @@ img {
 #results .list-item .image img {
 	display:block;
 	height:220px;
+	margin:0;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 #results .list-item .top {
 	display:block;
@@ -328,6 +333,7 @@ img {
 #results .top .info .name a {
 	display:inline-block;
 	font-size:1.875em;
+	line-height:1.4em;
 	color:#000;
 	*display:inline;
 	*zoom:1;
