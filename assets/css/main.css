@@ -28,6 +28,9 @@ ul {
 ul li{
 	list-style:none;
 }
+img {
+	max-width:100%;
+}
 
 #header {
 	display:block;
@@ -93,6 +96,9 @@ ul li{
 	left:0;
 	width:100%;
 }
+.results-preview:focus {
+	outline:none;
+}
 .results-preview.show {
 	display:block;
 }
@@ -146,8 +152,9 @@ ul li{
 .results-preview .results .type {
 	display:inline-block;
 	vertical-align:middle;
-	width:20%;
+	width:25%;
 	word-spacing:0;
+	overflow:hidden;
 	text-align:center;
 	font-size:1.625em;
 	color:#DFDFDF;
@@ -155,10 +162,18 @@ ul li{
 	*display:inline;
 	*zoom:1;
 }
+.results-preview .results .type img {
+	width:60%;
+	display:block;
+	margin:0 auto;
+}
 .results-preview .results .info {
 	display:inline-block;
 	vertical-align:middle;
 	word-spacing:0;
+	overflow:hidden;
+	word-wrap:break-word;
+	white-space:nowrap;
 	width:70%;
 	*display:inline;
 	*zoom:1;
