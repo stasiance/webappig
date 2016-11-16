@@ -1,17 +1,17 @@
 $(document).ready(function () {
-    var sfield = $("#search-input");
-    var formCnt = $("#search-form");
-    var resultCnt = $(".results-preview");
+	var sfield = $("#search-input");
+	var formCnt = $("#search-form");
+	var resultCnt = $(".results-preview");
 
 	resultCnt.bind('focusout', function() {
 		$(this).removeClass('show');
 	});
-	
+
 	var timer = null;
 	var numberWithCommas = function(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	;}
-    var timerFc = function() {
+		;}
+	var timerFc = function() {
 		$.ajax({
 			url: "assets/inc/ajax.php",
 			type: 'POST',
@@ -47,32 +47,51 @@ $(document).ready(function () {
 						'link' : 'http://www.instagram.com/' + rj.users[x].user.username + '/'
 					};
 				}
-				
+
 				for (var x in rj.users) {
 					output += '<li class="list-item">' +
-								'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
-									'<span class="type">' +
-										datatable[x].type + 
-									'</span>' +
-									'<span class="info">' +
-										'<span class="nickname">' +
-											datatable[x].user + 
-										'</span>' +
-										'<span class="figure">' +
-											datatable[x].byline + 
-										'</span>' +
-									'</span>' +
-								'</a>' + 
-							'</li>';					 
+						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
+						'<span class="type">' +
+						datatable[x].type +
+						'</span>' +
+						'<span class="info">' +
+						'<span class="nickname">' +
+						datatable[x].user +
+						'</span>' +
+						'<span class="figure">' +
+						datatable[x].byline +
+						'</span>' +
+						'</span>' +
+						'</a>' +
+						'</li>';
 				}
 				resultCnt.find('.results .list').html(output);
 				formCnt.removeClass('searching');
 				resultCnt.addClass('show').focus();
+
+
+
+				$('.search-result').click(function () {
+					$.ajax({
+						url: "assets/inc/ajax.php",
+						type: 'POST',
+						data: 'm=searchTag&q=' + sfield.val(),
+						beforeSend: function () {
+						},
+						success: function (r) {
+							console.log( r );
+						}
+					});
+				});
+
+
+
+
 			}
 		});
 	};
 	sfield.keyup(function () {
 		clearTimeout(timer);
 		timer = setTimeout(function() { timerFc(); }, 500);
-    })
+	})
 });
