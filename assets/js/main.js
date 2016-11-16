@@ -15,7 +15,7 @@ $(document).ready(function () {
 		$.ajax({
 			url: "assets/inc/ajax.php",
 			type: 'POST',
-			data: 'm=search&q=' + sfield.val(),
+			data: 'm=search&q=' + encodeURIComponent(encodeTxt),
 			beforeSend: function () {
 				formCnt.addClass('searching');
 			},
@@ -76,6 +76,7 @@ $(document).ready(function () {
 						url: "assets/inc/ajax.php",
 						type: 'POST',
 						data: 'm=searchTag&q=' + sfield.val(),
+						data: 'https://api.instagram.com/v1/tags/' + sfield.val() + '/media/recent?access_token=1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9',
 						beforeSend: function () {
 						},
 						success: function (r) {
