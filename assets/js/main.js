@@ -3,11 +3,11 @@ $(document).ready(function () {
 	var formCnt = $("#search-form");
 	var resultCnt = $(".results-preview");
 
-	// resultCnt.bind('focusout', function() {
-	// 	setTimeout(function() {
-	// 		resultCnt.removeClass('show');
-	// 	}, 100);
-	// });
+	 resultCnt.bind('focusout', function() {
+	 	setTimeout(function() {
+	 		resultCnt.removeClass('show');
+	 	}, 600);
+	 });
 
 	var timer = null;
 	var numberWithCommas = function(x) {
@@ -57,7 +57,7 @@ $(document).ready(function () {
 						'id' : rj.users[x].user.pk
 					};
 				}
-				for (var x in rj.users) {
+				for (var x in datatable) {
 					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '" data-name="' + datatable[x].user + '">' +
 						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
 						'<span class="type">' +
@@ -102,7 +102,7 @@ $(document).ready(function () {
 						url: "assets/inc/ajax.php",
 						type: 'GET',
 						data: 'm=' + searchType +
-							'&sk=' + $(sfield).val() +
+							'&sk=' + encodeURIComponent($(sfield).val()) +
 							'&ck=' + $(this).attr('data-name') +
 							'&q=' + $(this).attr('data-id'),
 						beforeSend: function () {},
