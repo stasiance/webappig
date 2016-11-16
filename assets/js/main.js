@@ -6,7 +6,7 @@ $(document).ready(function () {
 	resultCnt.bind('focusout', function() {
 		setTimeout(function() {
 			resultCnt.removeClass('show');
-		}, 100);
+		}, 600);
 	});
 
 	var timer = null;
@@ -107,7 +107,7 @@ $(document).ready(function () {
 							
 							if (rj.data.length <= 0) { return false; }
 							
-							var output = '<div class="top"><div class="image"><img src="' + rj.data[0].user.profile_picture + '" alt=""></div>' + 
+							var output = '<div class="top"><div class="image"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank"><img src="' + rj.data[0].user.profile_picture + '" alt=""></a></div>' + 
 											'<div class="info">' +
 												'<div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">' + rj.data[0].user.full_name + '</a></div>' + 
 											'</div></div>' + 							
