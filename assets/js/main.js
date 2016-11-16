@@ -4,7 +4,9 @@ $(document).ready(function () {
 	var resultCnt = $(".results-preview");
 
 	resultCnt.bind('focusout', function() {
-		$(this).removeClass('show');
+		setTimeout(function() {
+			resultCnt.removeClass('show');
+		}, 100);
 	});
 
 	var timer = null;
@@ -78,6 +80,8 @@ $(document).ready(function () {
 				resultCnt.find('.list-item').bind('click', function (e) {
 					e.preventDefault();
 					
+					$('#results').addClass('searching').html('');
+					
 					var searchType = 'searchTag';
 					switch($(this).attr('data-type')) {
 						case 'hashtag' :
@@ -100,9 +104,29 @@ $(document).ready(function () {
 						beforeSend: function () {},
 						success: function (r) {
 							var rj = jQuery.parseJSON(r);
-							console.log(rj);
+							
+							if (rj.data.length <= 0) { return false; }
+							
+							var output = '<div class="top"><div class="image"><img src="' + rj.data[0].user.profile_picture + '" alt=""></div>' + 
+											'<div class="info">' +
+												'<div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">' + rj.data[0].user.full_name + '</a></div>' + 
+											'</div></div>' + 							
+											'<ul class="list">';
+							
+							for (var x in rj.data) {
+								output += '<li class="list-item">' + 
+												'<div class="image">' + 
+													'<a href="' + rj.data[x].link + '" class="post-link" target="_blank">' +
+														'<img src="' + rj.data[x].images.standard_resolution.url + '" alt="">' +
+													'</a>' +
+												'</div>' +
+											'</li>';
+							}
+							output += '</ul>';
+							$('#results').removeClass('searching').html(output);
+							
 						}
-					});
+					});								
 					
 					return false;
 				});

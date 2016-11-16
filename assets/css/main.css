@@ -229,6 +229,10 @@ img {
 	box-sizing:border-box;
 	padding:100px 200px 50px;
 }
+#results {
+	display:block;
+	min-height:400px;
+}
 #results.searching {
 	background:url('../img/big_ajax_loader.gif') no-repeat scroll center center transparent;
 }
@@ -284,4 +288,21 @@ img {
 #results .list-item  .place-link {
 	color:#000;
 	line-height:1.3em;
+}
+#results .top {
+	display:block;
+	width:80%;
+	margin:0 auto 40px;
+}
+#results .image {
+	display:inline-block;
+	vertical-align:middle;
+	*display:inline;
+	*zoom:1;
+}
+#results .info {
+	display:inline-block;
+	vertical-align:middle;
+	*display:inline;
+	*zoom:1;
 }
