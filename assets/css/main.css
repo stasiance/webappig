@@ -330,6 +330,10 @@ img {
 	*display:inline;
 	*zoom:1;
 }
+#results .top .info.hashtype .name {
+	display:block;
+	text-align:center;
+}
 #results .top .info .name a {
 	display:inline-block;
 	font-size:1.875em;

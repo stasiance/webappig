@@ -121,6 +121,7 @@ $(document).ready(function () {
 					$('#results').addClass('searching').html('');
 
 					var searchType = 'searchTag';
+					var dataId = $(this).attr('data-id');
 					switch($(this).attr('data-type')) {
 						case 'hashtag' :
 							searchType = 'searchTag';
@@ -146,14 +147,28 @@ $(document).ready(function () {
 						beforeSend: function () {},
 						success: function (r) {
 							var rj = jQuery.parseJSON(r);
-
+							
 							if (rj.data.length <= 0) { return false; }
-
-							var output = '<div class="top"><div class="image"><img src="' + rj.data[0].user.profile_picture + '" alt=""></div>' +
-								'<div class="info">' +
-								'<div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">' + rj.data[0].user.full_name + '</a></div>' +
-								'</div></div>' +
-								'<ul class="list">';
+							
+							var topOutput = '';
+							switch(searchType) {
+								case 'searchTag':
+									topOutput = '<div class="top hashtag"><div class="info"><div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">#' + dataId + '</a></div></div></div>';
+									break;
+									
+								case 'searchLocation':
+									topOutput = '<div class="top hashtag"><div class="info"><div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">#' + dataId + '</a></div></div></div>';
+									break;
+									
+								case 'searchUser':
+									topOutput = '<div class="top"><div class="image"><img src="' + rj.data[0].user.profile_picture + '" alt=""></div>' +
+												'<div class="info">' +
+												'<div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">' + rj.data[0].user.full_name + '</a></div>' +
+												'</div></div>';
+									break;
+							}
+							
+							var output = topOutput + '<ul class="list">';
 
 							for (var x in rj.data) {
 								output += '<li class="list-item">' +
