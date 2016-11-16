@@ -61,6 +61,9 @@ img {
 	right:0;
 	margin-top:-12px;
 }
+#header #search .input {
+	display:block;
+}
 #search-form {
 	display:block;
 	position:relative;
@@ -142,12 +145,16 @@ img {
 }
 .results-preview .results .list-item {
 	display:block;
-	padding:10px 0 6px;
 	border-top:1px solid #CCC;
 	word-spacing:-0.26em;
 }
 .results-preview .results .list-item:hover {
 	background-color:#fafafa;
+}
+.results-preview .results .list-item a {
+	display:block;
+	width:100%;
+	padding:10px 0 6px;
 }
 .results-preview .results .type {
 	display:inline-block;
@@ -252,8 +259,14 @@ img {
 }
 #results .list-item .image {
 	display:block;
-	height:220px;
 	overflow:hidden;
+}
+#results .list-item .image a {
+	display:block;
+}
+#results .list-item .image img {
+	display:block;
+	height:220px;
 }
 #results .list-item .top {
 	display:block;
