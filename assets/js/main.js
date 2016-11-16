@@ -14,8 +14,8 @@ $(document).ready(function () {
 	var timerFc = function() {
 		$.ajax({
 			url: "assets/inc/ajax.php",
-			type: 'POST',
-			data: 'm=search&q=' + encodeURIComponent(encodeTxt),
+			type: 'GET',
+			data: 'm=search&q=' + encodeURIComponent(sfield.val()),
 			beforeSend: function () {
 				formCnt.addClass('searching');
 			},
@@ -74,7 +74,7 @@ $(document).ready(function () {
 				$('.search-result').click(function () {
 					$.ajax({
 						url: "assets/inc/ajax.php",
-						type: 'POST',
+						type: 'GET',
 						data: 'm=searchTag&q=' + sfield.val(),
 						data: 'https://api.instagram.com/v1/tags/' + sfield.val() + '/media/recent?access_token=1120907162.52fc381.a9d3c8eb44b34c04adbcc34cdc2a03d9',
 						beforeSend: function () {

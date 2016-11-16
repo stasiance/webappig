@@ -131,9 +131,10 @@ img {
 .results-preview .results {
 	display:block;
 	border:1px solid #CCC;
+	border-radius:3px;
 	background-color:#FFF;
 	margin-top:-1px;
-	max-height:400px;
+	max-height:362px;
 	overflow:auto;
 	
 	-webkit-box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.75);
@@ -143,7 +144,7 @@ img {
 .results-preview .results .list-item {
 	display:block;
 	padding:10px 0 6px;
-	border-top:1px solid #CCC;
+	border-bottom:1px solid #CCC;
 	word-spacing:-0.26em;
 }
 .results-preview .results .list-item:hover {
