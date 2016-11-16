@@ -3,11 +3,11 @@ $(document).ready(function () {
 	var formCnt = $("#search-form");
 	var resultCnt = $(".results-preview");
 
-	resultCnt.bind('focusout', function() {
-		setTimeout(function() {
-			resultCnt.removeClass('show');
-		}, 100);
-	});
+	// resultCnt.bind('focusout', function() {
+	// 	setTimeout(function() {
+	// 		resultCnt.removeClass('show');
+	// 	}, 100);
+	// });
 
 	var timer = null;
 	var numberWithCommas = function(x) {
@@ -16,7 +16,7 @@ $(document).ready(function () {
 	var timerFc = function(encodeTxt) {
 		$.ajax({
 			url: "assets/inc/ajax.php",
-			type: 'POST',
+			type: 'GET',
 			data: 'm=search&q=' + encodeURIComponent(encodeTxt),
 			beforeSend: function () {
 				formCnt.addClass('searching');
@@ -25,7 +25,7 @@ $(document).ready(function () {
 				var rj = jQuery.parseJSON(r);
 				var output = "";
 				var datatable = [];
-				
+
 				for (var x in rj.hashtags) {
 					datatable[rj.hashtags[x].position] = {
 						'category' : 'hashtag',
@@ -60,14 +60,14 @@ $(document).ready(function () {
 					output += '<li class="list-item" data-type="' + datatable[x].category + '" data-id="' + datatable[x].id + '">' +
 						'<a href="' + datatable[x].link + '" class="result-link" target="_blank">' +
 						'<span class="type">' +
-							datatable[x].type +
+						datatable[x].type +
 						'</span>' +
 						'<span class="info">' +
 						'<span class="nickname">' +
-							datatable[x].user +
+						datatable[x].user +
 						'</span>' +
 						'<span class="figure">' +
-							datatable[x].byline +
+						datatable[x].byline +
 						'</span>' +
 						'</span>' +
 						'</a>' +
@@ -76,58 +76,63 @@ $(document).ready(function () {
 				resultCnt.find('.results .list').html(output);
 				formCnt.removeClass('searching');
 				resultCnt.addClass('show').focus();
-				
+
 				resultCnt.find('.list-item').bind('click', function (e) {
 					e.preventDefault();
-					
+
 					$('#results').addClass('searching').html('');
-					
+
 					var searchType = 'searchTag';
 					switch($(this).attr('data-type')) {
 						case 'hashtag' :
 							searchType = 'searchTag';
 							break;
-							
+
 						case 'location' :
 							searchType = 'searchLocation';
 							break;
-							
+
 						case 'user' :
 							searchType = 'searchUser';
 							break;
 					}
-					
+
 					$.ajax({
 						url: "assets/inc/ajax.php",
-						type: 'POST',
-						data: 'm=' + searchType + '&q=' + $(this).attr('data-id'),
+						type: 'GET',
+						data: 'm=' + searchType +
+							'&sk=' + $(this).attr('data-id') +
+							'&ck=' + $(this).attr('data-id') +
+							'&q=' + $(this).attr('data-id') +
+							'&q=' + $(this).attr('data-id') +
+							'&q=' + $(this).attr('data-id'),
 						beforeSend: function () {},
 						success: function (r) {
 							var rj = jQuery.parseJSON(r);
-							
+
 							if (rj.data.length <= 0) { return false; }
-							
-							var output = '<div class="top"><div class="image"><img src="' + rj.data[0].user.profile_picture + '" alt=""></div>' + 
-											'<div class="info">' +
-												'<div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">' + rj.data[0].user.full_name + '</a></div>' + 
-											'</div></div>' + 							
-											'<ul class="list">';
-							
+
+							var output = '<div class="top"><div class="image"><img src="' + rj.data[0].user.profile_picture + '" alt=""></div>' +
+								'<div class="info">' +
+								'<div class="name"><a href="http://www.instagram.com/' + rj.data[0].user.username + '" target="_blank">' + rj.data[0].user.full_name + '</a></div>' +
+								'</div></div>' +
+								'<ul class="list">';
+
 							for (var x in rj.data) {
-								output += '<li class="list-item">' + 
-												'<div class="image">' + 
-													'<a href="' + rj.data[x].link + '" class="post-link" target="_blank">' +
-														'<img src="' + rj.data[x].images.standard_resolution.url + '" alt="">' +
-													'</a>' +
-												'</div>' +
-											'</li>';
+								output += '<li class="list-item">' +
+									'<div class="image">' +
+									'<a href="' + rj.data[x].link + '" class="post-link" target="_blank">' +
+									'<img src="' + rj.data[x].images.standard_resolution.url + '" alt="">' +
+									'</a>' +
+									'</div>' +
+									'</li>';
 							}
 							output += '</ul>';
 							$('#results').removeClass('searching').html(output);
-							
+
 						}
-					});								
-					
+					});
+
 					return false;
 				});
 			}
@@ -137,5 +142,5 @@ $(document).ready(function () {
 		clearTimeout(timer);
 		timer = setTimeout(function() { timerFc(sfield.val()); }, 500);
 	});
-	
+
 });
