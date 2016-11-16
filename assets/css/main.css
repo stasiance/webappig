@@ -166,6 +166,8 @@ img {
 	width:60%;
 	display:block;
 	margin:0 auto;
+	border-radius:50%;
+	border: 1px solid transparent;
 }
 .results-preview .results .info {
 	display:inline-block;
